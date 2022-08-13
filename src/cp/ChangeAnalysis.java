@@ -85,7 +85,8 @@ public class ChangeAnalysis {
 			
 			HashMap<String, Integer> tempMap = mapElement.getValue();
 			
-			for (String string : revisions) {
+			for (int i = 1; i < revisions.size(); i++) {
+				String string = revisions.get(i);
 				if (tempMap.containsKey(string)) {
 					stringBuilder.append(",");
 					stringBuilder.append(tempMap.get(string));
