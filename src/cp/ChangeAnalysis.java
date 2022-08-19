@@ -32,10 +32,25 @@ public class ChangeAnalysis {
 		String[] changes = GitUtil.getChanges(base, head, repo);
 		System.out.println("Number of changed files: "+ changes.length);
 		for (String change : changes) {
+			
+			if(change.split("\t").length < 3) continue;
+			
 			String added = change.split("\t")[0];
 			String deleted = change.split("\t")[1];
 			String file = change.split("\t")[2];
-			int total = Integer.parseInt(added) + Integer.parseInt(deleted);
+			
+			int total = 0;
+			
+			try {
+				total = Integer.parseInt(added) + Integer.parseInt(deleted);				
+			} catch (NumberFormatException e) {
+				// TODO: handle exception
+				System.err.println(e);
+				System.err.println("Ignoring the following change:");
+				System.err.println(change);
+				continue;
+			}
+			
 			stringBuilder.append(project + "," + base + "," + head + "," + change.replace('\t', ',') + "," + total);
 			stringBuilder.append(System.lineSeparator());
 			
@@ -51,7 +66,7 @@ public class ChangeAnalysis {
 			
 		}
 
-		MyFileUtils.writeToFile(new File(cwd + File.separator + "changes-" + base  + "--" + head  + ".csv"), stringBuilder.toString());
+		MyFileUtils.writeToFile(new File(cwd + File.separator + "changes-" + base.replace('/', '-')  + "--" + head.replace('/', '-')  + ".csv"), stringBuilder.toString());
 
 	}
 

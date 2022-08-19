@@ -15,7 +15,7 @@ public class Main {
 	public static void main(String[] args) {
 
 		String cwd = "demo-project";
-		String project = "activemq";
+		String project = "deeplearning4j";
 
 		String projectConfigFile = cwd + File.separator + project + ".conf";
 		String repo = cwd + File.separator + project + "-repo";
